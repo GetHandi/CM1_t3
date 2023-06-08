@@ -9,6 +9,7 @@ using namespace std;
 
 void PrintMatrix(double* ptr[], const unsigned char SIZE_R, const unsigned char SIZE_C)
 {
+	cout << "Matrix:\n";
 	for (int i = 0; i < SIZE_R; i++) {
 		for (int j = 0; j < SIZE_C; j++) {
 			cout << setw(9) << ptr[i][j] << " ";
@@ -46,7 +47,7 @@ int main()
 	cout << "Free Terms:\n";
 	for (int i = 0; i < SIZE; i++)
 	{
-		cout << free_terms[i] << '\t';
+		cout << setw(9) << free_terms[i];
 	}
 	cout << endl << endl;
 
@@ -57,6 +58,8 @@ int main()
 	while (k != -1)
 	{
 		k += 1;
+		cout << "Check!_______________________________________________" << endl << endl;
+
 		// вычисления;
 		for (int i = 0; i < SIZE; i++)
 		{
@@ -68,24 +71,36 @@ int main()
 				}
 			}
 			temp[i] /= matrix[i][i];
-			result[i] = temp[i];
+			
+			// вывод в консоль не изменяющегося значения Xn (проверка на метод простых итераций)
+			for (int r = 0; r < SIZE; r++)
+			{
+				cout << setw(9) << result[r];
+			}
+			cout << endl << endl;
+
 		}
 
+		cout << endl << endl;
+		cout << "_______________________________________________Check!" << endl;
+
 		// вывод промежуточного результата в консоль;
-		cout << k+1 << ") " << "Interim result:\n";
+		cout << k << ") " << "Interim result:\n";
 		for (int i = 0; i < SIZE; i++)
 		{
-			cout << "x" << i+1 << " = " << result[i] << endl;
+			cout << setw(9) << "x" << i+1 << " = " << result[i] << endl;
 		}
 		cout << endl << endl;
 
-		// присваивание временной переменной снова значения матрицы свободных членов;
+		// приваивание массиву результат новых значений из временного массива term;
+		// присваивание временному массиву term снова значения матрицы свободных членов;
 		for (int i = 0; i < SIZE; i++)
 		{
+			result[i] = temp[i];
 			temp[i] = free_terms[i];
 		}
 
-		// проверка на eps;
+		// проверка на eps;!!!!!!!!!!!!!!!!!!! ПЕРЕДЕЛАТЬ для всех членов
 		if (abs(result[k-1] - result2[k-1]) > eps)
 		{
 			for (int i = 0; i < SIZE; i++)
@@ -93,14 +108,14 @@ int main()
 				result2[i] = result[i];
 			}
 		}
-		// выход из wbrkf while и вывод результатов в консоль;
+		// выход из цикла while и вывод результатов в консоль;
 		else {
 			k = -1;
 			cout << "Result:\n";
 
 			for (int i = 0; i < SIZE; i++)
 			{
-				cout << "x" << i+1 << " = " << result[i] << endl;
+				cout << setw(9) << "x" << i+1 << " = " << result[i] << endl;
 			}
 		}
 	}
