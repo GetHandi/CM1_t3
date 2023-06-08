@@ -99,24 +99,28 @@ int main()
 			result[i] = temp[i];
 			temp[i] = free_terms[i];
 		}
-
-		// проверка на eps;!!!!!!!!!!!!!!!!!!! ПЕРЕДЕЛАТЬ для всех членов
-		if (abs(result[k-1] - result2[k-1]) > eps)
+		
+		// проверка на eps;
+		for (int i = 0; i < SIZE; i++)
 		{
-			for (int i = 0; i < SIZE; i++)
+			if (abs(result[i] - result2[i]) > eps)
+				break;
+			if (i == SIZE-1)
 			{
-				result2[i] = result[i];
+				k = -1;
+				cout << "Result:\n";
+
+				for (int i = 0; i < SIZE; i++)
+				{
+					cout << setw(9) << "x" << i + 1 << " = " << result[i] << endl;
+				}
 			}
 		}
-		// выход из цикла while и вывод результатов в консоль;
-		else {
-			k = -1;
-			cout << "Result:\n";
 
-			for (int i = 0; i < SIZE; i++)
-			{
-				cout << setw(9) << "x" << i+1 << " = " << result[i] << endl;
-			}
+		// присваивание полученных результатов в новую переменную для следующего сравнения на eps;
+		for (int i = 0; i < SIZE; i++)
+		{
+			result2[i] = result[i];
 		}
 	}
 ///////////////////////////////////////////////////////////////////////////////////
